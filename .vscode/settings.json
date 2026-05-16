@@ -1,0 +1,17 @@
+{
+  "idf.currentSetup": "${env:IDF_PATH}",
+  "idf.flashType": "UART",
+  "C_Cpp.default.compilerPath": "/nix/store/v7whpq1hn0jhcna8l8663vj83736g9gq-esp-clang-esp-idf-v5.5.2/bin/clang",
+  "clangd.arguments": [
+    "--background-index",
+    "--query-driver=**",
+    "--compile-commands-dir=/home/sifi/git/esp32/hello_world/build"
+  ],
+  "idf.openOcdConfigs": [
+    "board/esp32s3-builtin.cfg"
+  ],
+  "idf.customExtraVars": {
+    "IDF_TARGET": "esp32s3"
+  },
+  "clangd.path": "/nix/store/dg6rq9f37522x9dg8fzrprgvzds3lky9-esp-clang-esp-idf-v5.5.2/bin/clangd"
+}

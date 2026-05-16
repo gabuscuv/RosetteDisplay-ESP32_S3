@@ -1,0 +1,112 @@
+# =========================================================
+# ESP-IDF
+# =========================================================
+
+build/
+sdkconfig
+sdkconfig.old
+sdkconfig.defaults.old
+
+# CMake
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+compile_commands.json
+
+# Ninja
+.ninja_deps
+.ninja_log
+
+# ESP-IDF generated
+flasher_args.json
+flash_args
+partition_table/
+project_description.json
+config.env
+
+# Logs
+*.log
+
+# =========================================================
+# Nix
+# =========================================================
+
+result
+result-*
+.direnv/
+.envrc.local
+
+# Optional:
+# Keep flake.lock tracked for reproducibility
+# Uncomment if you intentionally don't want it tracked
+# flake.lock
+
+# =========================================================
+# VSCode
+# =========================================================
+
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+!.vscode/tasks.json
+!.vscode/launch.json
+
+# clangd
+.cache/
+.clangd/
+
+# =========================================================
+# Python
+# =========================================================
+
+__pycache__/
+*.pyc
+*.pyo
+.python-version
+venv/
+.venv/
+
+# =========================================================
+# macOS
+# =========================================================
+
+.DS_Store
+
+# =========================================================
+# Linux
+# =========================================================
+
+*~
+*.swp
+*.swo
+
+# =========================================================
+# Media / Assets
+# =========================================================
+
+# Temporary rendered frames
+frames/
+captures/
+
+# MJPEG generated files
+*.mjpeg.tmp
+
+# =========================================================
+# Binary blobs
+# =========================================================
+
+*.bin
+*.elf
+*.map
+
+# Keep firmware artifacts only if desired
+# !release/*.bin
+
+# =========================================================
+# Testing / Coverage
+# =========================================================
+
+coverage/
+htmlcov/
+*.gcda
+*.gcno
