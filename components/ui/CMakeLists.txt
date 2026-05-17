@@ -6,6 +6,7 @@ idf_component_register(
         "include"
 
     REQUIRES
+        lvgl_config
         app
         qr
         cadizgamedev

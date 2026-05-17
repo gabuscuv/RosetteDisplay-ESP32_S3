@@ -1,0 +1,7 @@
+[submodule "extern/lvgl"]
+	path = extern/lvgl
+	branch = release/v8.3
+    url = https://github.com/lvgl/lvgl.git
+[submodule "extern/tjpgd/tjpgd"]
+	path = extern/tjpgd/tjpgd
+	url = https://github.com/Bodmer/TJpg_Decoder.git

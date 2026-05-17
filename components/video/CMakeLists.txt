@@ -8,6 +8,7 @@ idf_component_register(
         "include"
 
     REQUIRES
+        tjpgd
         esp_common
         log
 )
