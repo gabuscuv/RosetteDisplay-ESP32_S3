@@ -3,6 +3,15 @@
 cmake_minimum_required(VERSION 3.16)
 
 set(EXTRA_COMPONENT_DIRS
+    drivers/i2c
+    drivers/exio
+    drivers/battery
+    drivers/touch
+    drivers/lcd
+    drivers/lvgl_port
+
+    drivers/sdcard
+
     extern/lvgl
     extern/tjpgd
 )
