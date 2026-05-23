@@ -9,6 +9,7 @@ idf_component_register(
 
     REQUIRES
         tjpgd
+        sdcard
         esp_common
         log
 )

@@ -4,6 +4,7 @@
 #include "cadizgamedev.h"
 #include "mjpeg_player.h"
 #include "esp_log.h"
+#include "sample.h"
 
 static const char *TAG = "UI_ROUTER";
 void ui_router_init()
@@ -40,6 +41,10 @@ void ui_router_switch(app_mode_t mode)
         case APP_MODE_SLEEP:
             mjpeg_player_stop();
             mode_contact_show("Sleep mode"); // placeholder
+            break;
+        case APP_MODE_SAMPLE:
+            mjpeg_player_stop();
+            mode_sample_show();
             break;
         default:
             break;

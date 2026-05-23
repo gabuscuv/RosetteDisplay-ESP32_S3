@@ -1,5 +1,6 @@
 idf_component_register(
     SRCS
+        "sample.c"
         "ui_router.c"
 
     INCLUDE_DIRS

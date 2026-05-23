@@ -9,8 +9,9 @@ set(EXTRA_COMPONENT_DIRS
     drivers/touch
     drivers/lcd
     drivers/lvgl_port
-
     drivers/sdcard
+    
+    platform/display
 
     extern/lvgl
     extern/tjpgd

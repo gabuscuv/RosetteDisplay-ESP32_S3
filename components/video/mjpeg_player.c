@@ -1,3 +1,4 @@
+#include "tjpgd.h"
 #include "mjpeg_player.h"
 #include "esp_log.h"
 

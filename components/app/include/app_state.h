@@ -4,12 +4,12 @@
 
 typedef enum {
   APP_MODE_NONE = -1,
-  APP_MODE_CADIZGAMEDEV,
-  APP_MODE_CONTACT,
+  APP_MODE_SAMPLE,
   APP_MODE_VIDEO,
+  APP_MODE_CONTACT,
+  APP_MODE_CADIZGAMEDEV,
   APP_MODE_QR,
-APP_MODE_SLEEP
-    
+  APP_MODE_SLEEP  
 } app_mode_t;
 
 void app_state_init(void);
