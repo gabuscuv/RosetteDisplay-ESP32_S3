@@ -1,6 +1,6 @@
 {
-  "idf.currentSetup": "${env:IDF_PATH}",
-  "idf.flashType": "UART",
+  "idf.currentSetup": "/nix/store/56s25jddmz984wdfn27a0l803dc4iz2y-esp-idf-v5.5.2",
+  "idf.flashType": "JTAG",
   "C_Cpp.default.compilerPath": "/nix/store/v7whpq1hn0jhcna8l8663vj83736g9gq-esp-clang-esp-idf-v5.5.2/bin/clang",
   "clangd.arguments": [
     "--background-index",
@@ -13,5 +13,6 @@
   "idf.customExtraVars": {
     "IDF_TARGET": "esp32s3"
   },
-  "clangd.path": "/nix/store/dg6rq9f37522x9dg8fzrprgvzds3lky9-esp-clang-esp-idf-v5.5.2/bin/clangd"
+  "clangd.path": "/nix/store/dg6rq9f37522x9dg8fzrprgvzds3lky9-esp-clang-esp-idf-v5.5.2/bin/clangd",
+  "idf.port": "/dev/ttyACM0"
 }
