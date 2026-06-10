@@ -10,6 +10,11 @@ void app_display_init(void)
     display_init();
 }
 
+void app_display_switch_mode(display_mode_t mode)
+{
+    display_set_mode(mode);
+}
+
 void app_display_clear(void)
 {
     ESP_LOGI(TAG, "Clear screen");

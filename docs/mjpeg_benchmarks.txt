@@ -1,0 +1,2 @@
+Initial Implementation: MJPEG_PLAYER: read=103ms decode=5ms display=104ms changeBuffer=0ms total=212ms
+IO Improvements: MJPEG_PLAYER: read=24ms decode=5ms display=104ms changeBuffer=0ms total=134ms

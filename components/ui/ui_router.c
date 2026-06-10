@@ -30,9 +30,7 @@ void ui_router_switch(app_mode_t mode)
             break;
 
         case APP_MODE_VIDEO:
-            mode_contact_show("Video mode"); // stop other UI
-            mjpeg_source_t src = {0};
-            mjpeg_player_start(src);
+            mjpeg_player_start("videos/meltyfantasia.bin");
             break;
         case APP_MODE_QR:
             mjpeg_player_stop();

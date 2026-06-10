@@ -15,5 +15,5 @@ void app_init_system(void)
     ui_router_init();
     app_state_init();
 
-    app_state_set(APP_MODE_SAMPLE);
+    app_state_set(APP_MODE_VIDEO); // start in video mode for testing
 }

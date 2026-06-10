@@ -8,8 +8,13 @@ idf_component_register(
         "include"
 
     REQUIRES
-        tjpgd
+        freertos
         sdcard
         esp_common
         log
+        display
+        driver
+        esp_driver_spi
+        esp_driver_sdspi
+        tjpgd
 )

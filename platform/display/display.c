@@ -67,11 +67,8 @@ void display_flush(void *buffer, size_t size) {
     // call esp LCD driver
     // lcd_panel_draw_bitmap(buffer, 0, 0, EXAMPLE_LCD_WIDTH - 1,
     //                       EXAMPLE_LCD_HEIGHT - 1);
-    esp_lcd_panel_draw_bitmap(panel_handle,
-                            0, 0,
-                            EXAMPLE_LCD_WIDTH - 1,
-                            EXAMPLE_LCD_HEIGHT - 1,
-                            buffer);
+    esp_lcd_panel_draw_bitmap(panel_handle, 0, 0, EXAMPLE_LCD_WIDTH,
+                              EXAMPLE_LCD_HEIGHT, buffer);
 
 }
 
