@@ -14,16 +14,20 @@ static const char *TAG = "MJPEG_DECODER";
 #define XOFF ((360 - 320) / 2)
 #define YOFF ((360 - 320) / 2)
 
-static mjpeg_ctx_t *current_ctx;
-
 void mjpegdecoder_init(mjpeg_ctx_t *ctx) {
     ESP_LOGI(TAG, "Initializing MJPEG decoder");
+
     ctx->buf_index = 0;
     ctx->next = 1;
     ctx->jpg_buf[0] = heap_caps_malloc(200 * 1024, MALLOC_CAP_SPIRAM);
     ctx->jpg_buf[1] = heap_caps_malloc(200 * 1024, MALLOC_CAP_SPIRAM);
+
     ctx->rgb_buf[0] = heap_caps_malloc(SCREEN_W * SCREEN_H * 2, MALLOC_CAP_SPIRAM);
+    assert(ctx->rgb_buf[0]);
+
     ctx->rgb_buf[1] = heap_caps_malloc(SCREEN_W * SCREEN_H * 2, MALLOC_CAP_SPIRAM);
+    assert(ctx->rgb_buf[1]);
+
     ESP_LOGI(TAG, "Initialized MJPEG decoder");
 }
 
@@ -81,31 +85,31 @@ bool mjpeg_player_next_frame(FILE *file, jpeg_frame_t *out)
 }
 
 // TJpgDec Callback
-static IRAM_ATTR int tjd_output(JDEC *jdec, void *bitmap, JRECT *rect) {
-
+static int tjd_output(JDEC *jdec, void *bitmap, JRECT *rect)
+{
+    mjpeg_device_t *dev = (mjpeg_device_t *)jdec->device;
 
     uint16_t *src = (uint16_t *)bitmap;
-    uint16_t *dst = current_ctx->rgb_buf[current_ctx->buf_index];
+    uint16_t *dst = dev->out_rgb;
 
     int w = rect->right - rect->left + 1;
     int h = rect->bottom - rect->top + 1;
+    int stride_pixels = dev->out_stride / 2; // bytes → pixels
 
-    for (int y = 0; y < h; y++)
-    {
-    memcpy(
-        dst + (rect->top + y + YOFF) * SCREEN_W +
-              rect->left + XOFF,
-        src + y * w,
-        w * 2
-    );
+    for (int y = 0; y < h; y++) {
+        memcpy(
+            dst + (rect->top + y + YOFF) * stride_pixels +
+                  rect->left + XOFF,
+            src + y * w,
+            w * 2
+        );
     }
     return 1;
 }
 
-static IRAM_ATTR size_t tjd_input(JDEC *jdec, uint8_t *buf, size_t len) {
-    // ESP_LOGI(TAG, "JPEG size %dx%d", jdec->width, jdec->height);
-    // ESP_LOGI(TAG, "SCREEN_W=%d SCREEN_H=%d", SCREEN_W, SCREEN_H);
-    jpg_stream_t *stream = (jpg_stream_t *)jdec->device;
+static size_t tjd_input(JDEC *jdec, uint8_t *buf, size_t len) {
+    mjpeg_device_t *dev = (mjpeg_device_t *)jdec->device;
+    jpg_stream_t *stream = &dev->stream;
 
     size_t remaining = stream->size - stream->pos;
     size_t to_read = (len < remaining) ? len : remaining;
@@ -130,27 +134,28 @@ static IRAM_ATTR size_t tjd_input(JDEC *jdec, uint8_t *buf, size_t len) {
 bool mjpegdecoder_decode(mjpeg_ctx_t *ctx, jpeg_frame_t *frame, uint16_t *out_rgb,
                          size_t out_stride) {
 //   ESP_LOGI(TAG, "Decoding MJPEG");
-    current_ctx = ctx;
     JDEC jdec;
     static uint8_t work[8192];
+
+    mjpeg_device_t dev = {
+        .stream = {
+            .data = frame->data,
+            .size = frame->size,
+            .pos  = 0
+        },
+        .out_rgb   = out_rgb,
+        .out_stride = out_stride,
+        .ctx       = ctx
+    };
+
 #ifdef VERBOSE_LOGGING
     ESP_LOGI(TAG, "JPEG frame size = %u", (unsigned)frame->size);
 #endif
-    
-    jpg_stream_t stream = {
-        .data = frame->data,
-        .size = frame->size,
-        .pos = 0
-    };
-
-    if(jd_prepare(&jdec, tjd_input, work, sizeof(work), &stream) != JDR_OK)
+    if(jd_prepare(&jdec, tjd_input, work, sizeof(work), &dev) != JDR_OK)
     {
         ESP_LOGE(TAG, "jd_prepare failed");
         return false;
     }
-    
-    current_ctx->buf_index = current_ctx->next;
-
     if (jd_decomp(&jdec, tjd_output, 0) != JDR_OK)
     {
         ESP_LOGE(TAG, "jd_decomp failed");

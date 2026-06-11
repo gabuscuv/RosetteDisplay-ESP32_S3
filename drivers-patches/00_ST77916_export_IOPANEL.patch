@@ -1,0 +1,38 @@
+diff --git a/drivers/lcd/ST77916.c b/drivers/lcd/ST77916.c
+index 00018fa..e24c513 100644
+--- a/drivers/lcd/ST77916.c
++++ b/drivers/lcd/ST77916.c
+@@ -8,6 +8,7 @@
+ static const char *TAG_LCD = "ST77916";
+ 
+ esp_lcd_panel_handle_t panel_handle = NULL;
++esp_lcd_panel_io_handle_t io_handle = NULL;
+ 
+ 
+ static const st77916_lcd_init_cmd_t vendor_specific_init_new[] = {
+@@ -267,7 +268,7 @@ int QSPI_Init(void){
+       .cs_high_active = 0,            
+     },                                  
+   };
+-  esp_lcd_panel_io_handle_t io_handle = NULL;
++  io_handle = NULL;
+   if(esp_lcd_new_panel_io_spi((esp_lcd_spi_bus_handle_t)ESP_PANEL_HOST_SPI_ID_DEFAULT, &io_config, &io_handle) != ESP_OK){
+     printf("Failed to set LCD communication parameters -- SPI\r\n");
+     return 0;
+diff --git a/drivers/lcd/ST77916.h b/drivers/lcd/ST77916.h
+index a5171d6..ac3ff59 100644
+--- a/drivers/lcd/ST77916.h
++++ b/drivers/lcd/ST77916.h
+@@ -56,9 +56,11 @@
+ #define LEDC_TEST_DUTY         (4000)
+ #define LEDC_ResolutionRatio   LEDC_TIMER_13_BIT
+ #define LEDC_MAX_Duty          ((1 << LEDC_ResolutionRatio) - 1)
+-#define Backlight_MAX   100      
++#define Backlight_MAX   100
+ 
+ extern esp_lcd_panel_handle_t panel_handle;
++extern esp_lcd_panel_io_handle_t io_handle;
++
+ extern uint8_t LCD_Backlight;
+ 
+ void ST77916_Init();

@@ -19,3 +19,10 @@ typedef struct {
     volatile int buf_index;
     volatile int next;
 } mjpeg_ctx_t;
+
+typedef struct {
+    jpg_stream_t stream;
+    uint16_t *out_rgb;
+    size_t out_stride;   // in bytes
+    mjpeg_ctx_t *ctx;
+} mjpeg_device_t;
