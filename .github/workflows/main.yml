@@ -1,0 +1,38 @@
+name: ESP-IDF Build
+
+on:
+  push:
+    branches:
+      - main
+
+  pull_request:
+
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  ESP_IDF_VERSION: v5.5
+
+jobs:
+  build-centralhub:
+    name: Building RosseteDisplay
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Patching Display Driver
+        run: |
+          git apply --check drivers-patches/00_ST77916_export_IOPANEL.patch
+          git apply --3way drivers-patches/00_ST77916_export_IOPANEL.patch
+
+      - name: Build RosseteDisplay project
+        uses: espressif/esp-idf-ci-action@v1
+        with:
+          esp_idf_version: ${{ env.ESP_IDF_VERSION }}
+          target: esp32s3
